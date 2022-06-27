@@ -10,22 +10,20 @@ bot = webbot.Browser()
 
 def follow(user):
     print(f'Following {user}')
-    f = open('following', 'r')
-    following = f.read().split('\n')
-    f.close()
+    with open('following', 'r') as f:
+        following = f.read().split('\n')
     for i in following:
       if user == i:
         bot.go_to(f'https://github.com/{user}?tab=following')
         bot.click('Follow', tag="button", multiple=True)
         bot.go_to(f'https://github.com/{user}?tab=followers')
         bot.click('Follow', tag="button", multiple=True)
-        
+
         return
     bot.go_to(f'https://github.com/{user}')
     bot.click('Follow', tag="button")
-    f = open('following', 'a')
-    f.write(f"{user}\n")
-    f.close()
+    with open('following', 'a') as f:
+        f.write(f"{user}\n")
 
 
 def start():
